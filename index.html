@@ -1,19 +1,48 @@
 <!doctype html>
 
 <head>
+	<title>Ryan's Weird Search Function</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" href="styles.css">
 	<script>
-		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
+		function setSearchEngine (event) {
+			let engine = document.querySelector('input[name=engine]:checked');
+			let form = document.getElementById('searchForm');
+			let q = document.querySelector('input[name=q]');
+
+			let actions = {
+				"google": "https://www.google.com/",
+				"duckDuckGo": "https://duckduckgo.com",
+				"bing": "https://www.bing.com",
+				"ask": "https://www.ask.com"
+			};
+			
+			if (!q.value) {
+				alert('You must enter a search.');
+				event.preventDefault();
+			} else if (!engine) {
+				alert('You must select a search engine.');
+				event.preventDefault();
+			} else {
+				form.action = actions[engine.value];
+			}
+		}
+		window.addEventListener("load", function(){
+			let form = document.getElementById('searchForm');
+			form.addEventListener('submit', setSearchEngine);
+    	});
 	</script>
 </head>
 
 <body>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
+	<form id="searchForm" action="">
+    <label>Search: <input type="text" name="q"/></label>
+	<label> Google<input class="g" type="radio" name="engine" value="google"/></label>
+	<label> DuckDuckGo<input type="radio" name="engine" value="duckDuckGo"/></label>
+	<label> bing<input type="radio" name="engine" value="bing"/></label>
+	<label> Ask<input type="radio" name="engine" value="ask"/></label>
+	<button name="submit" value="Go!">Go!</button>
 	</form>
 
 </body>
